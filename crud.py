@@ -36,3 +36,17 @@ def Inserir(nome, cnpj, insc, endereço, numero, bairro, cep, municipio, uf, pho
    con.commit()
    
    
+def Buscar(x, y):
+   
+   sql = """
+         SELECT *
+         FROM clientes
+         WHERE "{}" = "{}"
+         """.format(x,y)
+   
+   cur.execute(sql)
+   data = cur.fetchall()
+   return data
+   
+#Buscar()
+#print(Buscar())
