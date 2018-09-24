@@ -23,15 +23,18 @@ class Main(tk.Frame):
       self.master.config(menu=self.menubar)
       
       self.menu_pedidos = tk.Menu(self.menubar, tearoff=0)
+      self.menu_produtos = tk.Menu(self.menubar, tearoff=0)
       self.menu_clientes = tk.Menu(self.menubar, tearoff=0)
       self.menu_clientes.config(bg='white')
                        
       
       self.menubar.add_cascade(menu=self.menu_pedidos, label='Pedidos')
       self.menubar.add_cascade(menu=self.menu_clientes, label='Clientes')
+      self.menubar.add_cascade(menu=self.menu_produtos, label='Produtos')
       
       self.menu_clientes.add_command(label="Inserir clientes", command=self.Inserir_Clientes)
       self.menu_clientes.add_command(label="Buscar clientes", command = self.Buscar_Clientes)
+      self.menu_produtos.add_command(label="Inserir produto",command = self.Inserir_Produtos)
       
    def Inserir_Clientes(self):
       
@@ -332,6 +335,51 @@ class Main(tk.Frame):
    FIM DA BUSCA POR CLIENTES
    """      
 #=============================================================================
+      
+   def Inserir_Produtos(self):
+      self.frame_de_base.destroy()
+      
+      self.frame_de_base = tk.Frame(self)
+      self.frame_de_base.pack()
+      
+      self.frame_prod = tk.Frame(self.frame_de_base)
+      self.frame_prod.grid(row=0,column=0)
+      
+      self.lb_prod = tk.Label(self.frame_prod)
+      self.lb_prod['text']="Produto"
+      self.lb_prod.grid(row=0,column=0)
+      
+      self.lb_tipo = tk.Label(self.frame_prod)
+      self.lb_tipo['text']="Tipo de produto"
+      self.lb_tipo.grid(row=1,column=0)
+      
+      self.entry_nomeprod = tk.Entry(self.frame_prod)
+      self.entry_nomeprod.grid(row=0,column=1, sticky='w')
+      
+      self.combo_pro = ttk.Combobox(self.frame_prod)
+      self.combo_pro['values']=crud.Buscar_Produto()
+      self.combo_pro.grid(row=1,column=1, sticky='w')
+      
+      self.entry_tipo = tk.Entry(self.frame_prod)
+      self.entry_tipo.grid(row=1,column=2)
+      
+      self.lb_prodinfo = tk.Label(self.frame_prod)
+      self.lb_prodinfo['text']= "Se o tipo do produto foi previamente cadastrado, utilize o ComboBox para inserir o tipo do novo produto"
+      self.lb_prodinfo.grid(row=3,column=0, columnspan=5)
+      
+      self.bt_insprod = tk.Button(self.frame_prod)
+      self.bt_insprod['text']="Inserir"
+      self.bt_insprod['command']= self.New_Prod
+      self.bt_insprod.grid(row=2,column=0)
+      
+   def New_Prod(self):
+      nome = self.entry_nomeprod.get()
+      tipo = self.entry_tipo.get()
+         
+      crud.Inserir_Produto(tipo, nome)
+      
+      
+      
       
       
       
